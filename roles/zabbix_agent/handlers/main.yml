@@ -1,0 +1,7 @@
+---
+  - name: restart zabbix-agent service
+    service: 
+      name: zabbix-agent
+      state: restarted
+      daemon_reload: yes
+    listen: restart zabbix service

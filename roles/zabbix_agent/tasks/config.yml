@@ -1,0 +1,47 @@
+---
+- name: Configure /etc/zabbix/zabbix_agentd.conf file (set server address)
+  lineinfile:
+    path: /etc/zabbix/zabbix_agentd.conf
+    regexp: "^Server=127.0.0.1"
+    line: "Server=1.1.1.1"
+    # Virginia proxy ip:
+    # BG proxy ip:
+    # Ireland proxy ip:
+
+- name: Configure /etc/zabbix/zabbix_agentd.conf file (comment ServerActive option)
+  lineinfile:
+    path: /etc/zabbix/zabbix_agentd.conf
+    regexp: "^ServerActive=127.0.0.1"
+    line: "#ServerActive=127.0.0.1"
+
+- name: Configure /etc/zabbix/zabbix_agentd.conf file (comment Hostname option)
+  lineinfile:
+    path: /etc/zabbix/zabbix_agentd.conf
+    regexp: "^Hostname=Zabbix server"
+    line: "#Hostname=Zabbix server"
+
+- name: Configure /etc/zabbix/zabbix_agentd.conf file (set psk connection)
+  lineinfile:
+    path: /etc/zabbix/zabbix_agentd.conf
+    insertafter: "# TLSConnect=unencrypted"
+    line: "TLSConnect=psk"
+
+- name: Configure /etc/zabbix/zabbix_agentd.conf file (set psk accept)
+  lineinfile:
+    path: /etc/zabbix/zabbix_agentd.conf
+    insertafter: "# TLSAccept=unencrypted"
+    line: "TLSAccept=psk"
+
+- name: Configure /etc/zabbix/zabbix_agentd.conf file (set psk identity)
+  lineinfile:
+    path: /etc/zabbix/zabbix_agentd.conf
+    insertafter: "# TLSPSKIdentity="
+    line: "TLSPSKIdentity=cbt_psk_01"
+
+- name: Configure /etc/zabbix/zabbix_agentd.conf file (set location of psk file)
+  lineinfile:
+    path: /etc/zabbix/zabbix_agentd.conf
+    insertafter: "# TLSPSKFile="
+    line: "TLSPSKFile=/opt/zabbix/zabbix_agent.psk"
+  notify:
+    - restart zabbix service

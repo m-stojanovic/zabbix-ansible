@@ -1,0 +1,26 @@
+---
+- name: System update
+  apt:
+    update_cache: yes
+    force_apt_get: yes
+
+- name: Install Zabbix 4.0 repo.
+  apt_repository:
+    repo: "{{ item }}"
+    state: present
+  loop:
+    - "deb http://repo.zabbix.com/zabbix/4.0/ubuntu focal main"
+    - "deb-src http://repo.zabbix.com/zabbix/4.0/ubuntu focal main"
+
+- name: Install Zabbix agent
+  apt:
+    name:
+      - zabbix-agent
+    state: present
+
+- name: Start and enable zabbix-agent service
+  systemd:
+    name: zabbix-agent
+    state: started
+    enabled: yes
+

@@ -1,0 +1,26 @@
+---
+- name: Create directory structure
+  file:
+    path: "{{ item }}"
+    owner: zabbix
+    group: zabbix
+    mode: 0755
+    state: directory
+  with_items:
+    - /opt/zabbix
+
+- name: Create psk file
+  file:
+    path: "{{ item }}"
+    owner: zabbix
+    group: zabbix
+    mode: 0600
+    state: touch
+  with_items:
+    - /opt/zabbix/zabbix_agent.psk
+
+- name: Generate hex value for psk file
+  #  command: "openssl rand -hex 32 -out /opt/zabbix/zabbix_agent.psk"
+  shell: "echo e9c8436ee84f2233c52c56f2c27918c7f7e6eb4fe5e9956ef5a15vade4521b10 > /opt/zabbix/zabbix_agent.psk"
+  become: yes
+  become_user: root
