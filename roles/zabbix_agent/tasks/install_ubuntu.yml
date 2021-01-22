@@ -4,6 +4,11 @@
     update_cache: yes
     force_apt_get: yes
 
+- name: Add zabbix repo official key
+  ansible.builtin.apt_key:
+    url: https://repo.zabbix.com/zabbix-official-repo.key
+    state: present
+
 - name: Install Zabbix 4.0 repo.
   apt_repository:
     repo: "{{ item }}"
