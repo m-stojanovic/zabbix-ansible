@@ -6,9 +6,9 @@
     skip_broken: yes
     update_cache: yes
 
-- name: Install Zabbix 4.0 repo.
+- name: Install Zabbix 5.2 repo.
   yum:
-    name: https://repo.zabbix.com/zabbix/4.0/rhel/7/x86_64/zabbix-release-4.0-1.el7.noarch.rpm
+    name: https://repo.zabbix.com/zabbix/5.2/rhel/7/x86_64/zabbix-release-5.2-1.el7.noarch.rpm
     state: present
     lock_timeout: 15
 
