@@ -9,13 +9,13 @@
     url: https://repo.zabbix.com/zabbix-official-repo.key
     state: present
 
-- name: Install Zabbix 4.0 repo.
+- name: Install Zabbix 5.2 repo.
   apt_repository:
     repo: "{{ item }}"
     state: present
   loop:
-    - "deb http://repo.zabbix.com/zabbix/4.0/ubuntu focal main"
-    - "deb-src http://repo.zabbix.com/zabbix/4.0/ubuntu focal main"
+    - "deb http://repo.zabbix.com/zabbix/5.2/ubuntu focal main"
+    - "deb-src http://repo.zabbix.com/zabbix/5.2/ubuntu focal main"
 
 - name: Install Zabbix agent
   apt:
