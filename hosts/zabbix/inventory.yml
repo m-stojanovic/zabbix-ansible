@@ -1,0 +1,20 @@
+all:
+  children:
+    hosts:
+      children:
+        zabbix:
+          children:
+            zabbix_agent:
+              hosts:
+                zabbix_agent_1:
+                  ansible_ssh_host:
+                  ansible_sudo_pass: "{{ ansible_sudo_pass_agents }}"
+                  ansible_ssh_pass: "{{ ansible_ssh_pass_agents }}"
+                  ansible_user: ec2-user
+            zabbix_server:
+              hosts:
+                zabbix_server_1:
+                  ansible_ssh_host:
+                  ansible_sudo_pass: "{{ ansible_sudo_pass_server }}"
+                  ansible_ssh_pass: "{{ ansible_ssh_pass_server }}"
+                  ansible_user: ec2-user

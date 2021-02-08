@@ -1,0 +1,30 @@
+---
+- name: Configure /etc/zabbix/nginx.conf file
+  lineinfile:
+    path: /etc/zabbix/nginx.conf
+    regexp: "# listen 80;"
+    line: "listen 8080;"
+
+- name: Create .my.cnf file for MySQL
+  template:
+    src: .my.cnf.j2
+    dest: /etc/zabbix/zabbix_agentd.d/
+    owner: zabbix
+    group: zabbix
+    mode: 755
+
+- name: Create userparameter_mysql.conf file for MySQL
+  template:
+    src: userparameter_mysql.conf.j2
+    dest: /etc/zabbix/zabbix_agentd.d/
+    owner: zabbix
+    group: zabbix
+    mode: 755
+
+- name: Configure /etc/zabbix/nginx.conf file
+  lineinfile:
+    path: /etc/zabbix/nginx.conf
+    regexp: "# server_name example.com;"
+    line: "server_name example.com;"
+  notify:
+    - restart zabbix_server

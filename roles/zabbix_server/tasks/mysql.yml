@@ -1,0 +1,22 @@
+---
+- name: Create Zabbix mysql database
+  mysql_db:
+    login_user: root
+    login_password: "{{ mysql_root_password }}"
+    name: "{{zabbix_server_db_name}}"
+    encoding: utf8
+    state: present
+  notify: restart nginx
+
+- name: Create zabbix mysql user
+  mysql_user:
+    login_user: root
+    login_password: "{{ mysql_root_password }}"
+    name: "{{zabbix_server_db_user}}"
+    password: "{{zabbix_server_db_pass}}"
+    priv: "{{zabbix_server_db_name}}.*:ALL"
+    state: present
+    host: "{{zabbix_server_db_host}}"
+
+- name: Import initial scheme and data
+  shell: "zcat /usr/share/doc/zabbix-server-mysql*/create.sql.gz | mysql --defaults-extra-file=/etc/zabbix/zabbix_agentd.d/.my.cnf --database=zabbix_db"

@@ -1,0 +1,46 @@
+---
+- name: System update
+  apt:
+    update_cache: yes
+    force_apt_get: yes
+
+- name: Add Zabbix repo official key
+  ansible.builtin.apt_key:
+    url: https://repo.zabbix.com/zabbix-official-repo.key
+    state: present
+
+- name: Install Zabbix 5.2 repo.
+  apt_repository:
+    repo: "{{ item }}"
+    state: present
+  loop:
+    - "deb http://repo.zabbix.com/zabbix/5.2/ubuntu focal main"
+    - "deb-src http://repo.zabbix.com/zabbix/5.2/ubuntu focal main"
+
+- name: Install Zabbix server and required packages
+  apt:
+    name:
+      - "{{ item }}"
+    state: present
+  with_items:
+    - zabbix-server-mysql
+    - zabbix-frontend-php
+    - zabbix-nginx-conf
+    - zabbix-agent
+    - mysql-server
+    - python3-pymysql
+
+- name: Zabbix server conf file
+  template:
+     src: zabbix_server.conf.j2
+     dest: /etc/zabbix/zabbix_server.conf
+     owner: zabbix
+     group: zabbix
+     mode: 600
+  notify: restart zabbix_server
+
+- name: Start and enable zabbix-server service
+  systemd:
+    name: zabbix-server
+    state: started
+    enabled: yes

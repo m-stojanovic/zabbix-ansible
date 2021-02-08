@@ -1,0 +1,46 @@
+zabbix_server_db_user: zabbix
+zabbix_server_db_pass: zabbix123!
+zabbix_server_db_name: zabbix_db
+zabbix_server_db_host: localhost
+zabbix_server_port: 10051
+mysql_root_password:
+
+zabbix_server_conf                    :
+    #ListenIP                          : 0.0.0.0
+    #ListenPort                        : "{{ zabbix_server_port }}"
+    LogFile                           : /var/log/zabbix/zabbix_server.log
+    LogFileSize                       : 0
+    PidFile                           : /var/run/zabbix/zabbix_server.pid
+    SocketDir                         : /run/zabbix
+    DBHost                            : localhost
+    DBName                            : "{{ zabbix_server_db_name }}"
+    DBUser                            : "{{ zabbix_server_db_user }}"
+    DBPassword                        : "{{ zabbix_server_db_pass }}"
+    StartPollers                      : 7
+    SNMPTrapperFile                   : /var/log/snmptrap/snmptrap.log
+    Timeout                           : 4
+    AlertScriptsPath                  : /usr/lib/zabbix/alertscripts
+    ExternalScripts                   : /usr/lib/zabbix/externalscripts
+    FpingLocation                     : /usr/bin/fping
+    Fping6Location                    : /usr/bin/fping6
+    LogSlowQueries                    : 3000
+    StartProxyPollers                 : 3
+    StatsAllowedIP                    : 127.0.0.1
+
+ansible_sudo_pass_agents:
+ansible_ssh_pass_agents:
+
+ansible_sudo_pass_server: !vault |
+          $ANSIBLE_VAULT;1.1;AES256
+          66323066373936643532626537663961363566396464396461376333336131646265356565353936
+          3363313866386337343033373663653031393733623966390a363031356334653432333033646464
+          36323736666531303337656533316365616632343464656362643236313163353163396438663830
+          6638616366373735340a396338316133373938623331356634353264306563363566373231396632
+          6638
+ansible_ssh_pass_server: !vault |
+          $ANSIBLE_VAULT;1.1;AES256
+          35656466663765323335666665636532383833316536343639633061323262366632373237643261
+          3562636636613264636334373766626530643634353762320a326266633762306336663263336135
+          38306232306138313934393637613530613963653662646436343731383562643136336632363831
+          3433336161306165390a306664313266663638386536333864626561363730363439313838653136
+          3165

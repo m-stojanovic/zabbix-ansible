@@ -1,0 +1,9 @@
+---
+- import_tasks: install_ubuntu.yml
+  tags: [install_ubuntu]
+
+- import_tasks: mysql.yml
+  tags: [mysql]
+
+- import_tasks: config.yml
+  tags: [config]
